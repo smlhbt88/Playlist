@@ -1,0 +1,9 @@
+= Playlist API
+
+== Create Playlist
+
+.request
+include::C:/Users/889421/IdeaProjects/playlist-api/target/snippets/createplaylist/http-request.adoc[]
+
+.response
+include::C:/Users/889421/IdeaProjects/playlist-api/target/snippets/createplaylist/http-response.adoc[]
