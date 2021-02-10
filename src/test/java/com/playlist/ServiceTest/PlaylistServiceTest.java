@@ -63,4 +63,15 @@ public class PlaylistServiceTest {
 
     }
 
+    @Test
+    public void createPlaylistWithoutName() {
+
+        PlaylistDto playlistDto = new PlaylistDto();
+
+        String response = playlistService.createPlaylist(playlistDto).getBody();
+
+        assertEquals("name is required",response);
+
+    }
+
 }

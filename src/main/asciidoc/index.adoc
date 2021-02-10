@@ -15,3 +15,11 @@ include::{snippets}/createplaylistwithexitingname/http-request.adoc[]
 
 .response
 include::{snippets}/createplaylistwithexitingname/http-response.adoc[]
+
+== Create Playlist without name
+
+.request
+include::{snippets}/createplaylistwithoutname/http-request.adoc[]
+
+.response
+include::{snippets}/createplaylistwithoutname/http-response.adoc[]

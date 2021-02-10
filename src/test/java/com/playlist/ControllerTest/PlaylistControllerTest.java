@@ -1,7 +1,5 @@
 package com.playlist.ControllerTest;
 
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playlist.models.Playlist;
 import com.playlist.models.PlaylistDto;
@@ -77,5 +75,23 @@ public class PlaylistControllerTest {
         assertEquals("unsuccessful",response);
 
     }
+
+    @Test
+    public void createPlaylistWithoutName() throws Exception {
+        PlaylistDto playlist = new PlaylistDto();
+
+        String response = mockMvc.perform(post("/playlist")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(playlist)))
+                .andExpect(status().isBadRequest())
+                .andDo(document("createplaylistwithoutname"))
+                .andReturn()
+                .getResponse().getContentAsString();
+
+        assertEquals("name is required",response);
+
+    }
+
+
 
 }

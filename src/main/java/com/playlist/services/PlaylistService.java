@@ -20,6 +20,9 @@ public class PlaylistService {
     }
 
     public ResponseEntity<String> createPlaylist(PlaylistDto playlistDto) {
+        if(playlistDto.getName() == null) {
+            return new ResponseEntity<>("name is required", HttpStatus.BAD_REQUEST);
+        }
         Playlist existingPlaylist = playlistRepository.findByName(playlistDto.getName());
         if(existingPlaylist != null)
         {

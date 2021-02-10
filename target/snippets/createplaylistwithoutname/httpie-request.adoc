@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ echo '{"name":null,"song":null}' | http POST 'http://localhost:8080/playlist' \
+    'Content-Type:application/json;charset=UTF-8'
+----
