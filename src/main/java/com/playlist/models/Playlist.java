@@ -1,6 +1,7 @@
 package com.playlist.models;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -10,14 +11,15 @@ public class Playlist {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @OneToOne
-    private Song song;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Song> songs;
 
     public Playlist() {}
 
-    public Playlist(String name, Song song) {
+    public Playlist(String name, List<Song> songs) {
         this.name = name;
-        this.song = song;
+        this.songs = songs;
     }
 
     public void setId(Long id) {
@@ -28,8 +30,12 @@ public class Playlist {
         this.name = name;
     }
 
-    public Song getSong() {
-        return song;
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
     }
 
     @Override

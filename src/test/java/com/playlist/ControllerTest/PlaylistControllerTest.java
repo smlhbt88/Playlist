@@ -1,8 +1,11 @@
 package com.playlist.ControllerTest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playlist.models.Playlist;
 import com.playlist.models.PlaylistDto;
+import com.playlist.models.Song;
+import com.playlist.models.SongDto;
 import com.playlist.repositories.PlaylistRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,15 +16,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs(outputDir = "target/snippets")
+@Transactional
 public class PlaylistControllerTest {
 
     @Autowired
@@ -54,7 +63,7 @@ public class PlaylistControllerTest {
 
         Playlist result = playlistRepository.findByName("playlist1");
 
-        assertTrue(result.getSong()==null);
+        assertTrue(result.getSongs()==null);
     }
 
     @Test
@@ -92,6 +101,30 @@ public class PlaylistControllerTest {
 
     }
 
+    @Test
+    public void addSongToPlayList() throws Exception {
+        List<Song> songList = new ArrayList<>();
+        Song song1  = new Song("Song 1");
+        Song song2  = new Song("Song 2");
+        songList.add(song1);
+        Playlist playlist = new Playlist("playlist1", songList);
+        playlistRepository.save(playlist);
 
+        SongDto songDto = new SongDto("Song 2");
+
+        mockMvc.perform(patch("/playlist/playlist1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(songDto)))
+                .andExpect(status().isCreated())
+                .andDo(document("addSongToPlayList"));
+
+        Playlist playlist1FromDB = playlistRepository.findByName("playlist1");
+
+        assertEquals(2, playlist1FromDB.getSongs().size());
+        assertEquals(song1, playlist1FromDB.getSongs().get(0));
+        assertEquals(song2, playlist1FromDB.getSongs().get(1));
+
+
+    }
 
 }

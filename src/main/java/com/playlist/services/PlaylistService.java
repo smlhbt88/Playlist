@@ -2,6 +2,8 @@ package com.playlist.services;
 
 import com.playlist.models.Playlist;
 import com.playlist.models.PlaylistDto;
+import com.playlist.models.Song;
+import com.playlist.models.SongDto;
 import com.playlist.repositories.PlaylistRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -36,6 +38,14 @@ public class PlaylistService {
             }
 
         return new ResponseEntity<>("unsuccessful", HttpStatus.BAD_REQUEST);
+
+    }
+
+    public void addSongToPlayList(SongDto songDto, String playlistName) {
+            Playlist playlist = playlistRepository.findByName(playlistName);
+            Song songEntity = modelMapper.map(songDto, Song.class);
+            playlist.getSongs().add(songEntity);
+            playlistRepository.save(playlist);
 
     }
 }

@@ -23,3 +23,11 @@ include::{snippets}/createplaylistwithoutname/http-request.adoc[]
 
 .response
 include::{snippets}/createplaylistwithoutname/http-response.adoc[]
+
+== Add Song to Playlist
+
+.request
+include::{snippets}/addSongToPlayList/http-request.adoc[]
+
+.response
+include::{snippets}/addSongToPlayList/http-response.adoc[]

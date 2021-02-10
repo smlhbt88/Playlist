@@ -1,6 +1,8 @@
 package com.playlist.controllers;
 
+import com.playlist.models.Playlist;
 import com.playlist.models.PlaylistDto;
+import com.playlist.models.SongDto;
 import com.playlist.services.PlaylistService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,5 +22,11 @@ public class PlaylistController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> createPlaylist(@RequestBody PlaylistDto playlistDto) {
        return playlistService.createPlaylist(playlistDto);
+    }
+
+    @PatchMapping("/playlist/{playlistName}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addSongToPlayList(@RequestBody SongDto songDto, @PathVariable String playlistName){
+        playlistService.addSongToPlayList(songDto, playlistName);
     }
 }

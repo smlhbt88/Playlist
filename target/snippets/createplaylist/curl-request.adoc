@@ -2,5 +2,5 @@
 ----
 $ curl 'http://localhost:8080/playlist' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -d '{"name":"playlist1","song":null}'
+    -d '{"name":"playlist1","songs":null}'
 ----

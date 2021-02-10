@@ -1,4 +1,4 @@
 [source,options="nowrap"]
 ----
-{"name":"playlist1","song":null}
+{"name":"playlist1","songs":null}
 ----

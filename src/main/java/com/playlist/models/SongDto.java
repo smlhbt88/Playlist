@@ -3,16 +3,13 @@ package com.playlist.models;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.List;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class PlaylistDto {
-
+@AllArgsConstructor
+public class SongDto{
     private String name;
-    private List<SongDto> songs;
-
 
 }
