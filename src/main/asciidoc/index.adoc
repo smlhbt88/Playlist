@@ -1,9 +1,17 @@
 = Playlist API
 
-== Create Playlist
+== Create Empty Playlist
 
 .request
-include::C:/Users/889421/IdeaProjects/playlist-api/target/snippets/createplaylist/http-request.adoc[]
+include::{snippets}/createplaylist/http-request.adoc[]
 
 .response
-include::C:/Users/889421/IdeaProjects/playlist-api/target/snippets/createplaylist/http-response.adoc[]
+include::{snippets}/createplaylist/http-response.adoc[]
+
+== Create Playlist with Existing name
+
+.request
+include::{snippets}/createplaylistwithexitingname/http-request.adoc[]
+
+.response
+include::{snippets}/createplaylistwithexitingname/http-response.adoc[]

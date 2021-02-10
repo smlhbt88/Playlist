@@ -1,10 +1,12 @@
 package com.playlist.ControllerTest;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playlist.models.Playlist;
 import com.playlist.models.PlaylistDto;
 import com.playlist.repositories.PlaylistRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -33,6 +35,11 @@ public class PlaylistControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
+    @BeforeEach
+    public void setUp(){
+        playlistRepository.deleteAll();
+    }
+
     @Test
     public void createPlaylist() throws Exception {
         PlaylistDto playlist = new PlaylistDto("playlist1", null);
@@ -50,6 +57,25 @@ public class PlaylistControllerTest {
         Playlist result = playlistRepository.findByName("playlist1");
 
         assertTrue(result.getSong()==null);
+    }
+
+    @Test
+    public void createPlaylistWithExistingName() throws Exception {
+        PlaylistDto playlist = new PlaylistDto("playlist1", null);
+        Playlist playlistEntity = new Playlist("playlist1", null);
+
+        playlistRepository.save(playlistEntity);
+
+        String response = mockMvc.perform(post("/playlist")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(playlist)))
+                .andExpect(status().isBadRequest())
+                .andDo(document("createplaylistwithexitingname"))
+                .andReturn()
+                .getResponse().getContentAsString();
+
+        assertEquals("unsuccessful",response);
+
     }
 
 }

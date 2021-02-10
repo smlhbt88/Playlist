@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"name":"playlist1","song":null}
+----

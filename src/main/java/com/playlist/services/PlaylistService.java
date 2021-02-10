@@ -4,6 +4,8 @@ import com.playlist.models.Playlist;
 import com.playlist.models.PlaylistDto;
 import com.playlist.repositories.PlaylistRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,13 +19,20 @@ public class PlaylistService {
         this.playlistRepository = playlistRepository;
     }
 
-    public String createPlaylist(PlaylistDto playlistDto) {
-        Playlist playlist = modelMapper.map(playlistDto,Playlist.class);
-
-        Playlist result = playlistRepository.save(playlist);
-        if(result!=null) {
-            return "successful";
+    public ResponseEntity<String> createPlaylist(PlaylistDto playlistDto) {
+        Playlist existingPlaylist = playlistRepository.findByName(playlistDto.getName());
+        if(existingPlaylist != null)
+        {
+            return new ResponseEntity<>("unsuccessful", HttpStatus.BAD_REQUEST);
         }
-        return null;
+
+            Playlist playlist = modelMapper.map(playlistDto, Playlist.class);
+            Playlist result = playlistRepository.save(playlist);
+            if (result != null) {
+                return new ResponseEntity<>("successful", HttpStatus.CREATED);
+            }
+
+        return new ResponseEntity<>("unsuccessful", HttpStatus.BAD_REQUEST);
+
     }
 }

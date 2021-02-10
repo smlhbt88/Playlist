@@ -36,13 +36,30 @@ public class PlaylistServiceTest {
         Playlist playlist = new Playlist("playlist1",null);
         PlaylistDto playlistDto = new PlaylistDto("playlist1", null);
 
+        when(playlistRepository.findByName(playlistDto.getName())).thenReturn(null);
         when(playlistRepository.save(playlist)).thenReturn(playlist);
 
-        String response  = playlistService.createPlaylist(playlistDto);
+         String response = playlistService.createPlaylist(playlistDto).getBody();
 
         verify(playlistRepository,times(1)).save(playlist);
 
         assertEquals("successful",response);
+
+    }
+
+    @Test
+    public void createPlaylistWithExistingName() {
+
+        Playlist playlist = new Playlist("playlist1",null);
+        PlaylistDto playlistDto = new PlaylistDto("playlist1", null);
+
+        when(playlistRepository.findByName(playlistDto.getName())).thenReturn(playlist);
+
+        String response = playlistService.createPlaylist(playlistDto).getBody();
+
+        verify(playlistRepository,times(1)).findByName(playlistDto.getName());
+
+        assertEquals("unsuccessful",response);
 
     }
 
