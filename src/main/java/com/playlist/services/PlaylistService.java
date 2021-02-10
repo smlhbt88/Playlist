@@ -48,4 +48,11 @@ public class PlaylistService {
             playlistRepository.save(playlist);
 
     }
+
+    public void deleteSongFromPlaylist(SongDto songDto, Long id) {
+        Playlist playlist = playlistRepository.getOne(id);
+        Song songEntity = modelMapper.map(songDto, Song.class);
+        playlist.getSongs().remove(songEntity);
+        playlistRepository.save(playlist);
+    }
 }

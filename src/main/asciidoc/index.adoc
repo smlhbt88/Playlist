@@ -31,3 +31,11 @@ include::{snippets}/addSongToPlayList/http-request.adoc[]
 
 .response
 include::{snippets}/addSongToPlayList/http-response.adoc[]
+
+== Remove a Song from a Playlist
+
+.request
+include::{snippets}/removesongfromplaylist/http-request.adoc[]
+
+.response
+include::{snippets}/removesongfromplaylist/http-response.adoc[]

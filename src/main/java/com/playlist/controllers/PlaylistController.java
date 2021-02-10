@@ -24,9 +24,14 @@ public class PlaylistController {
        return playlistService.createPlaylist(playlistDto);
     }
 
-    @PatchMapping("/playlist/{playlistName}")
+    @PatchMapping("playlist/{playlistName}")
     @ResponseStatus(HttpStatus.CREATED)
     public void addSongToPlayList(@RequestBody SongDto songDto, @PathVariable String playlistName){
         playlistService.addSongToPlayList(songDto, playlistName);
+    }
+
+    @DeleteMapping("playlist/{id}")
+    public void deleteSongFromPlaylist(@RequestBody SongDto songDto, @PathVariable Long id) {
+        playlistService.deleteSongFromPlaylist(songDto, id);
     }
 }

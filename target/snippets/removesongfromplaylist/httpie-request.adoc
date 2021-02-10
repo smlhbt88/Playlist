@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ echo '{"name":"Song 2"}' | http DELETE 'http://localhost:8080/playlist/1' \
+    'Content-Type:application/json;charset=UTF-8'
+----

@@ -23,8 +23,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -124,6 +123,30 @@ public class PlaylistControllerTest {
         assertEquals(song1, playlist1FromDB.getSongs().get(0));
         assertEquals(song2, playlist1FromDB.getSongs().get(1));
 
+
+    }
+
+    @Test
+    public void removeSongFromPlaylist() throws Exception {
+        List<Song> songList = new ArrayList<>();
+        Song song1  = new Song("Song 1");
+        Song song2  = new Song("Song 2");
+        songList.add(song1);
+        songList.add(song2);
+        Playlist playlist = new Playlist("playlist1", songList);
+        Playlist playlistRepo = playlistRepository.save(playlist);
+
+        SongDto songDto = new SongDto("Song 2");
+
+        mockMvc.perform(delete("/playlist/"+playlistRepo.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(songDto)))
+                .andExpect(status().isOk())
+                .andDo(document("removesongfromplaylist"));
+
+        Playlist playlist1FromDB = playlistRepository.findByName("playlist1");
+        assertEquals(1, playlist1FromDB.getSongs().size());
+        assertEquals(List.of(song1),playlist1FromDB.getSongs());
 
     }
 

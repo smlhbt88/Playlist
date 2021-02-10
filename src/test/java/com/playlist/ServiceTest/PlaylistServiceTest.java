@@ -99,4 +99,29 @@ public class PlaylistServiceTest {
         verify(playlistRepository, times(1)).save(playlistEntity);
     }
 
+
+    @Test
+    public void deleteSongFromPlaylist() {
+        SongDto songdto  = new SongDto("Song 2");
+
+        Song songEntity1  = new Song("Song 1");
+        Song songEntity2  = new Song("Song 2");
+        List<Song> songList = new ArrayList<>();
+        songList.add(songEntity1);
+        songList.add(songEntity2);
+        Playlist playlistEntity = new Playlist("playlist1", songList);
+
+        when(playlistRepository.getOne(1L)).thenReturn(playlistEntity);
+
+        playlistService.deleteSongFromPlaylist(songdto,1L);
+
+        List<Song> songList2 = new ArrayList<>();
+        songList2.add(songEntity1);
+
+        Playlist playlistEntity2 = new Playlist("playlist1", songList2);
+
+        verify(playlistRepository, times(1)).save(playlistEntity2);
+
+    }
+
 }
