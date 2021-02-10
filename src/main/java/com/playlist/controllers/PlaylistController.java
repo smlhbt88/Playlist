@@ -1,6 +1,5 @@
 package com.playlist.controllers;
 
-import com.playlist.models.Playlist;
 import com.playlist.models.PlaylistDto;
 import com.playlist.models.SongDto;
 import com.playlist.services.PlaylistService;
